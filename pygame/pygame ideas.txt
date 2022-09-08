@@ -1,0 +1,47 @@
+Pygame Ideas
+============
+
+pygame_example02.py has the basics of a game. 
+Replace rectangles with png images? 
+Nice idea - perhaps use paint 3D? 
+
+Thursday 10/02/2022
+------------------
+So yesterday I did a diver sprite and a UFO sprite. I can now replace the onscreen rectangle of pygame_example2.py with a sprite, as seen in pygame_example3a.py and the game still functions - if the diver sprite touches one of the randomly appearing yellow enemies, it dies and game over. 
+
+What do I want to do now?
+Add shark sprite. Rather than blinking in randomly, this will move across the screen. 
+Add treasure sprite. Rather than killing the diver, touching it will add to score. 
+
+This all feels very complicated and ambitious, so lets do this slowly one step at a time. 
+
+I also feel unfamiliar with pygame and how it is all structured. 
+I've found the pygame API at https://www.pygame.org/docs/
+
+Okay, so I have made progress. 
+I have introduced the Treasure class, and when the player sprite collides with the treasure sprite, the player gains +10 points.
+
+There are a lot of things to remember and to debug. 
+Writing the class itself, including the __init__ constructor and update method
+The event to create the object, 
+	ADDTREASURE = pygame.USEREVENT +2
+	pygame.time.set_timer(ADDTREASURE, 500)
+Adding the event to the main running loop
+        elif event.type == ADDTREASURE:
+            new_treasure = Treasure()
+            treasures.add(new_treasure)
+            all_sprites.add(new_treasure)
+            print("new treasure at: ", new_treasure)
+
+This includes the assignment to sprite groups including all_sprites
+
+In the running loop, what happens if there is a collision?
+    if pygame.sprite.spritecollideany(player, treasures):
+        collectedTreasure = pygame.sprite.spritecollide(player, treasures, True)
+        for treasure in collectedTreasure:
+            treasureScore += treasure.score
+            treasure.kill()
+			
+Just before end of loop, tell it to update
+    treasures.update()
+
