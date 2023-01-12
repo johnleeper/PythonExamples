@@ -1,0 +1,432 @@
+0 $You find yourself in a dimly lit cavern. You are not 
+sure how you got here but you know you have to find a way 
+out. Checking yourself you find you have an electric 
+flashlight and a compass with which to navigate. 
+$You look around. Goto 1
+---
+1 $This is a relatively plain, featureless cavern with 
+rugged walls and fairly flat, gravel-like floor. Looking 
+around the cavern you see there are three tunnels exiting 
+this cavern.
+$Do you go north? Goto 2
+$Do you go east? Goto 3
+$Do you go south? Goto 4
+---
+2 $This cavern has a pool of water in it. At a distance you 
+cannot see clearly into the pool. Also this cavern has two 
+exits, one heading south, one heading east. 
+$Do you investigate the pool? Goto 2a
+$Do you go south? Goto 1
+$Do you go east? Goto 5
+---
+2a $You go over to the pool and lean over. As you peer in, 
+a huge albino octopus rushes up from the depths and lashes 
+out of the water with suckered tentacles. You try to 
+retreat from the pool before the creature can pull you down
+You lose 5 stamina. //-5
+$Do you go south? Goto 1
+$Do you go east? Goto 5
+---
+3 $This cavern has something strange in the middle. It 
+looks like a pedestal with a golden skull. The Golden Skull 
+is about human-sized but looks distorted and slightly 
+alien. Looking around the edges of the cavern there are two 
+exits, one tunnel heading west, one tunnel heading east. 
+$Do you investigate the gold skull? Goto 3a
+$Do you go west? Goto 1
+$Do you go east? Goto 6
+---
+3a $You go to the pedestal and you reach out to pick up 
+the skull. ZZAAPP!! You are shocked as electric current 
+shoots from the skull to your hands. You are thrown away 
+from the skull. 
+You lose 5 stamina //-5 
+$Do you go west? Goto 1
+$Do you go east? Goto 6
+---
+4 $This cavern is empty except for a wrapped up parcel on 
+the floor. There is only a single exit heading north. 
+$Do you go north? Goto 1
+$Do you investigate the parcel? Goto 4a
+---
+4a $The parcel contains a cheese and chutney sandwich which 
+you devour. 
+You gain 3 stamina //3
+$You leave the cavern and head back north. Goto 1
+---
+5 $This cavern contains the fossilized bones of some 
+ancient giant beast, perhaps a dinosaur. There are two 
+exits, one to the west and one to the east. 
+$Do you investigate the bones? Goto 5a
+$Do you go west? Goto 2
+$Do you go east? Goto 7
+---
+5a $The huge fossilised bones are home to a vicious 
+scorpion the size of an alligator. It rushes out, lashing 
+with its pincers, wounding you before you jump away. 
+You lose 4 stamina and the scorpion scuttles back into the 
+pile of fossils. // -4
+$Do you go west? Goto 2
+$Do you go east? Goto 7
+---
+6 $This cavern has a massive crack in the floor dropping 
+down to a chasm running across the cavern from north to 
+south. There is a ricketty-looking bridge made up of fence 
+posts and old rope. You are currently on the west side 
+where there is a tunnel heading west. There is another 
+tunnel on the far side heading east. 
+$Do you go west? Goto 3
+$Do you cross the rope bridge? Goto 6a
+---
+6a $The rope bridge seems to hold and you gingerly start to 
+cross it. As you do so, a massive flapping shape flies out 
+of the chasm below you. It is a giant bat, and it swoops 
+down with its claws, lashing you for 2 stamina before 
+flying back down into the darkness. //-2
+$You cross the ropebridge. Goto 6b
+---
+6b $You are now on the east side of a cavern with a chasm 
+running from north to south. There is a rather flimsy-
+looking bridge across the yawning gap, made of rope and 
+wooden planks. There is an exit on your side heading east, 
+and another exit on the other side of the chasm heading 
+west. 
+$Do you cross the bridge and head west? Goto 6c
+$Do you take the exit east? Goto 9
+---
+6c $As you carefully cross the rickety bridge, a huge bat 
+flaps out of the chasm and bites you for 2 stamina then 
+flies back down into the darkness. //-2
+$You hurry across the bridge. Goto 6
+---
+7 $This cavern is filled with various fungi. There are tall 
+green ones, broad-capped blue mushrooms and small white 
+ones. The cavern has three exit tunnels, one to the west, 
+one to the north and one to the east.
+$Do you go west? Goto 5
+$Do you go north? Goto 13
+$Do you go east? Goto 8
+$Do you try to eat the green fungi? Goto 7a
+$Do you try to eat the blue fungi? Goto 7b
+$Do you try to eat the white fungi? Goto 7c
+---
+7a $You pull off a chunk of tall, green fungus cap and 
+tenatively put it in your mouth. It actually tastes quite 
+nice, like peaches mixed with walnuts. As you eat enough 
+green fungal cap to fill your stomach you gain 2 stamina. 
+However, you have temporarily depleted the green fungi - 
+you've eaten all the edible bits. //2
+$Do you go west? Goto 5
+$Do you go north? Goto 13
+$Do you go east? Goto 8
+$Do you try to eat the blue fungi? Goto 7b
+$Do you try to eat the white fungi? Goto 7c
+---
+7b $You pull off a piece of blue fungus and chew on it. It 
+tastes rather bland but within minutes you start to have 
+stomach cramps and retching. You bring the blue fungus back 
+up onto the cavern floor and lose 4 stamina. //-4
+$Do you go west? Goto 6
+$Do you go north? Goto 13
+$Do you go east? Goto 8
+$Do you try to eat the green fungi? Goto 7a
+$Do you try to eat the white fungi? Goto 7c
+---
+7c $You try some of the small white fungi. The fungus 
+itself tastes like raw corgette. Within minutes the room 
+begins to glow eerily, the walls and fungi start to change 
+colour and strange geometric shapes in reds, blues and 
+purples emerge from the floor. You rush off in a blind 
+panic as you lose control of your mind. Your consciousness 
+temporarily slips away as insanity takes your body for a 
+joy ride. When you regain clarity, it seems you have ended 
+up back where you started. At least you are alive. 
+$You look around. Goto 1
+---
+8 $This chamber is filled with stalactites, stalagmites 
+and limestone columns.  There are three exits, one to the 
+west, one to the south and one to the east. As you stand 
+looking around the cavern you hear a scuttling noise gently 
+echoing around the chamber.
+$Do you investigate the noise? Goto 8a
+$Do you go west? Goto 7
+$Do you go south? Goto 9
+$Do you go east? Goto 12
+---
+8a $You head towards the scuttling noise and see a giant 
+gecko perched head down on a column. It is a huge creature 
+the size of a crocodile and it looks at you briefly, before 
+deciding you are edible. It tries to bite your head off but 
+you raise your arm just in time. As you try to scramble 
+away and make a dash for one of the exits, its teeth sink 
+into your arm and you lose 4 stamina..//-4 
+$Do you go west? Goto 7
+$Do you go south? Goto 9
+$Do you go east? Goto 12   
+---
+9 $This cavern has somebody wandering around it, possibly 
+searching or maybe patrolling. They are swinging what seems 
+to be a baseball bat in their hand, and they are wearing a 
+security guard's jumpsuit. Their brutish face does not seem
+friendly. However, there are also many boulders around this 
+cavern, and it may be possible to access one of the three 
+exits by stealth. The three tunnels from this cavern lead 
+north, west and east. 
+$Do you try to talk to the guard? Goto 9a
+$Do you try to attack the guard in a rush? Goto 9b
+$Do you try to sneak around, hiding behind the boulders? Goto 9c
+---
+9a $The guard notices you approach, and moves towards you, 
+baseball bat in hand. You greet him and try to ask him how
+to find the exit. He snarls and swings the bat at you. You 
+catch the blow on your arm and then another blow in your 
+ribs. You decide that he is not conversational, and make a 
+dash for one of the exits as he swings his club at you 
+again. You loose 4 stamina. //-4
+$Do you head west? Goto 6b
+$Do you head north? Goto 8
+$Do you head east? Goto 10
+---
+9b $You rush at the unsuspecting security guard. He doesn't 
+see you until too late. He brings his baseball bat down 
+glancing on your head, as you knock him to the ground. He 
+is out cold for the moment though your head hurts (-2 
+stamina). //-2
+$Do you head east? Goto 6b
+$Do you head north? Goto 8
+$Do you head east? Goto 10
+---
+9c $Staying as quiet as possible you crawl around behind 
+the boulders near the walls of the cavern while the 
+security guard simply wanders around the center of the 
+cavern, seemingly unaware of you. You have a choice of 
+three exits.  
+$Do you head east? Goto 6b
+$Do you head north? Goto 8
+$Do you head east? Goto 10
+---
+10 $This cave is well-lit with electric lamps, and there is 
+a middle-aged man in a lab coat with spectacles and hardly 
+any hair. There are biological specimens in glass jars over 
+2m tall - huge lizards, giant spiders, giant snakes and 
+scorpions, all dead and floating in preservatives.
+There are three exits, north, south and west. 
+$Do you attack the man? Goto 10a
+$Do you talk to the man? Goto 10b
+$Do you ignore him and simply head for one of the exits? Goto 10c
+---
+10a $You rush towards the man who shrieks in fear, but he 
+pulls out a surgical scalpel and starts slashing with it. 
+You eventually knock him out but only after he inflicts 
+several stab wounds on you (-3 stamina). //-3
+$Do you head west? Goto 9
+$Do you head north? Goto 11
+$Do you head south? Goto 12
+---
+10b $The middle-aged man smiles as he sees you approach. 
+"Ah, the prodigal fool returns! I was wondering what would 
+happen to you when we dumped you in the back of the cave 
+system. Personally I expected you to get eaten by my pets," 
+he says, waving at the preserved monstrous specimens. "But 
+I am being rude! You are tired, hungry and injured. I just 
+happen to have a little pick-me-up in my pocket." He 
+reaches into his lab coat and pulls out a hypodermic 
+syringe, and pulls the plastic guard off the needle as he 
+advances towards you. 
+$Do you accept the injection? Goto 10d
+$Do you feign acceptance then attack him? Goto 10e
+$Do you run away to one of the exits? Goto 10c
+---
+10c $As you make a dash across the chamber the man in the
+lab coat picks a scalpel out of his pocket and flings it at 
+you like a throwing knife. It sticks in your shoulder (-1 
+stamina). // -1
+$Do you go north? Goto 11
+$Do you go west? Goto 9
+$Do you go south? Goto 12
+---
+10d $You allow the man to stick the needle in your arm and 
+you feel the cold fluid seeping into your veins. As you 
+loose consciousness, your last ever thought is maybe this 
+was not a good idea... Within an hour your lifeless body is 
+his latest specimen on display. //-100
+---
+10e $You allow him to get close then suddenly make your 
+move, punching him in the face and knocking him to the 
+ground. He yells in pain and fear as he tries to get back 
+up. You make a run for one of the exits. 
+$Do you head west? Goto 9
+$Do you head north? Goto 11
+$Do you head south? Goto 12
+---
+11 $This chamber only has one exit to the south, which you 
+have just come in by. The room is lit by electric lamps, 
+and there is both an operating table, a set of shelves with 
+various surgical implements and a mature woman in an gown 
+strapped down onto a metal bed. She sees you across the 
+room and starts trying to yell, though the strap across her 
+mouth stops her from making much noise. 
+$Do you investigate the shelves of instruments? Goto 11a
+$Do you ungag the woman but leave her strapped down? Goto 11b
+$Do you completely release the woman? Goto 11c
+---
+11a $There are scalpels, forceps, syringes and brown 
+bottles of liquids with illegible labels. You decide to 
+leave these items alone. There are also boxes of gauze and 
+bandaging. 
+$You look around. Goto 11
+---
+11b $You ungag the woman on the metal bed. She says "Thank 
+God you're here! Let me go! I can help you if you want." 
+You ask her who she is. "My name is Christin, I was the 
+laboratory assistant to Dr Ungol, who works in the previous 
+chamber. He went mad and decided I was stealing his ideas, 
+and he's going to do horrible things to me. You've got to 
+release me!"
+$Do you release her? Goto 11c
+$Do you leave her tied up? Goto 11
+$Do you investigate the shelves of instruments? Goto 11a
+---
+11c $The woman is clearly grateful for being set free and 
+explains that her boss, a scientist nearby, has gone mad. 
+She offers first aid to heal your wounds, gesturing to the 
+shelves of medical equipment. 
+$Do you accept her offer of help? Goto 11d
+$Do you leave the area and exit south? Goto 10
+---
+11d $Despite any concerns you might have the lab assistant 
+leaves the strange phials and needles alone and efficiently 
+dresses your wounds with the supplies on the shelves. You 
+gain 4 stamina. //4
+$You thank her and leave via the south exit. Goto 10
+---
+12 $This chamber has three exits, heading north, south and 
+west. It is only dimly lit but you can make out the shapes 
+of two large animals, maybe dogs, lying in the middle of 
+the floor. They appear asleep but you cannot tell from this 
+distance. 
+$Do you want to run across quickly? Goto 12a
+$Do you want to sneak across quietly? Goto 12b
+$Do you want to be friendly and approach the dogs? Goto 12c
+---
+12a $Your feet scrabbling along the loose stoney floor 
+cause quite a noise and the guard dogs awaken and give 
+chase. They are rotweillers, big, powerful and faster than 
+you. They bite your legs and hands and inflict severe 
+injuries as you struggle towards one of the exits (-4 
+stamina). //-4
+$Do you head north? Goto 10
+$Do you head west? Goto 14
+$Do you head south? Goto 15
+---
+12b $You tiptoe quietly and the large dogs stay asleep. 
+Staying as stealthy as possible you head to one of the 
+exits. 
+$Do you head north? Goto 10
+$Do you head west? Goto 14
+$Do you head south? Goto 15
+---
+12c $The dogs spring to the alert and see you approach. 
+They growl but don't attack - they seem unsure what to do. 
+After making reassuring noises, the two rotweillers settle 
+back down, not asleep but keeping an eye on you. You decide 
+to leave before the guard dogs change their minds. 
+$Do you head north? Goto 10
+$Do you head west? Goto 14
+$Do you head south? Goto 15
+---
+13 $This cavern contains numerous piles of boulders and 
+rubble, as if there have been cave-ins. There seems to be a 
+pair of booted legs sticking out from under a pile of 
+rocks. The only exit is to the south, where you came from. 
+$Do you go south? Goto 7
+$Do you investigate the body under the rubble? Goto 13a
+---
+13a $The poor sod who was crushed under the rocks here is 
+quite dead. However, his lunchbox has survived and inside 
+is a large cheese and salami sandwich. You promptly eat it 
+and gain 2 stamina. //2 
+$There is one way out, back south. Goto 7
+---
+14 $This chamber is dominated by a cage that contains a 
+huge gorilla, perhaps 4m tall and weighing several tonnes. 
+It looks at you quizzically and leans forward, pressing its 
+face against the bars to sniff you. To one side there is a 
+control panel that you guess opens or locks the cage. There 
+are three exits from this chamber, east, west and south. 
+$Do you try to unlock the cage and release the gorilla? Goto 14a
+$Do you head west? Goto 12
+$Do you head east? Goto 17
+$Do you head south? Goto 16
+---
+14a $You find the unlock switch on the control panel and 
+there is a clunk as the door to the cage swings ajar. The 
+huge gorilla pushes the door open and ambles out. He leans 
+over and casually sniffs you. He then heads west out of the 
+cave. 
+$Do you follow the gorilla west? Goto 17a
+$Do you head east? Goto 12
+$Do you go through the south exit? Goto 16
+---
+15 $This chamber holds a large computer with a screen the 
+size of a bed. A virtual face appears on the screen, 
+resembling a young blond man. "Hi, my name is Max. Welcome 
+to Omnicorp Biological Laboratories. You must be new - my 
+sensors don't recognise you. My processors are busy 
+recombining virtual DNA sequences so I'm afraid you can 
+only ask one question." What questions do you ask the face
+on the screen? 
+$"How did I get here?" Goto 15a
+$"How do I get out of here?" Goto 15b
+$"What is going on in this facility?" Goto 15c
+---
+15a $"You walked into this room!" The face on the screen 
+gives a weird electronic laugh. Max then adds a quizical 
+face. "You don't remember getting to this facility? You 
+tried to infiltrate the facility to find out what we at 
+Omnicorp Biology Laboratories are up to. You were caught 
+and deposited at the back of the caverns. Sorry, but our 
+chat is over". The screen goes blanks and you leave. 
+$You head back north. Goto 12 
+---
+15b $ "To get out of here is not easy. All humans are currently 
+trapped here while Sheelob is out of her containment cell. 
+Have you met Sheelob? Big, scary, multiple legs? Bit of a 
+problem. I compute you cannot defeat her by yourself. The 
+only thing that can stop Sheelob is Big Monk. He's about 12 
+foot tall, hairy and got something of an attitude. But he 
+really doesn't like Sheelob." Max hesitates and says 
+"Sorry, newer, high priority calculations have arrived in 
+RAM. Gotta go." The screen goes blank and you decide to 
+leave. 
+$You head back north. Goto 12 
+---
+15c $"What's going on here? Serious biological research! Of
+course, it's being conducted in a hidden cave system away 
+from annoying prying eyes due to legal and ethical reasons, 
+namely what we are doing here is illegal and unethical, but 
+Dr Ungol has assured me that it's perfectly okay. Nice 
+chatting to you, but I've got to get back to work." Max's 
+face disappears as the screen goes blank. 
+$You head back north. Goto 12 
+---
+16 $This room has a middle aged man, stern-looking with 
+steel rimmed glasses, sat behind a desk. Before you can do
+anything he pulls a gun on you. "Allow me to introduce myself
+I am Dr Ungol, the chief scientist of this facility, which 
+you sneaked into. I'm sorry my dear chap,
+but we can't have intruders like you wandering around here
+sticking their noses into my business." The room has no 
+other exits. What do you do?
+$Rush at the man and try to tackle him. Goto 16a
+$Talk to the man. Goto 16b
+$Try to escape the way you came Goto 16c
+---
+16a $You charge at Dr Ungol but he is too fast for you. 
+Shots ring out in rapid succession and you are hit several
+times. //-5
+$Although wounded you manage to fling yourself out of the
+door before Dr Ungol can reload and you head back north. Goto 14
+---
+16b $ 
+

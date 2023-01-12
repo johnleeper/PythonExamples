@@ -1,0 +1,67 @@
+
+Coming back to this program after several years. 
+Some of it is pretty good. 
+
+Currently there is no proper combat system, only fixed deductions of stamina for certain paragraphs involving violent encounters. This is sufficient for a very rough version but should be improved on later. 
+
+Also no inventory system. You could have a persistent inventory list, and modify the program so that if a required item is in inventory, then new options appear in the list of choices. 
+Not sure how to implement that. 
+
+Writing content for the data file is actually the main demand on time and effort. I could add more encounters/areas if I wanted to. 
+
+The map/flowchart in the powerpoint presentation is good for reminding myself how the areas are arranged, and the connections between them. 
+
+Also each encounter needs to be self-sufficient, in that apart from stamina (and possibly inventory) what goes on in 1 room should not affect what happens in another. 
+
+there is the problem of repeating a room and having the exact same things happen. This is particularly noticable with Dr Ungol, Big Monk and other more interactive encounters. 
+
+I've just realised you can ask Max the computer multiple questions if you leave and come back in (resetting the encounter) between each one. 
+
+As well as an inventory list, you could also have an event list. Choices within encounters trigger events (added to the list) such as setting Big Monk free. If an event has happened, this could change options. 
+
+Both the idea of an inventory list and an event list would mean even more paragraphs as a result of extra options. As long as I have a rough idea of what to write and where it leads (i.e. overall adventure structure) this should be okay. 
+
+Just realised I don't like the structure of the program, particularly the way that nextparagraph calls on itself. It should not be recursive, it should be a while loop. 
+If I was feeling ambitious I would replace the data file with a SQLite database. However, that would make the program a lot less portable - any computer you try to run it on would need both Python and SQLite installed. 
+
+Another thing is turning paragraphs into objects. 
+
+Starting caver02.py to implement some of these ideas. 
+
+So when the user is progressing through the adventure, do we do death check first or print paragraph? 
+Ideally split it so that it prints paragraph prose first, 
+then death check
+Then if still active, any options available. 
+
+Currently not sure how to have a class with methods of its own. 
+
+Thinking about how this is all quite a big, complex program, at least for me. 
+Testing in small chunks? 
+Because everything is in or called by main() and the only non-defined method call is main() at the bottom, this could be modified so that it calls methods to test. 
+
+If I was feeling really brave I might have a go at turning the data file into XML. Would I need to import an XML reader or do I create that from scratch? It would be easier in the end for parsing data files. 
+I have imported standard modules & classes (random, math & sys) before but not my own. 
+The xml approach could prove better if I do implement event and inventory lists. 
+
+
+Things to work on:
+Work out Python equivalent of try/catch for validating option inputs. Done, sort of. Haven't effectively tested it but the chooseOption method should now cope with invalid option choices. 
+
+But now really having problems with objects within dictionaries. 
+Maybe go back to a simpler program and build things up? Honestly I'm not that familiar with classes and objects in Python so I could be getting something wrong. 
+
+Good news, got caver02.py working, at least to a level that caver01 was at. 
+Two things:
+	* Finish off the actual paragraphs
+	* start thinking about an event system - eating a sandwich, asking Max a question, unleashing Big Monk should all be doable only once. 
+	
+So how do we do this event system? 
+Current idea is there is a class representing a room/area in all its states, and also what its initial, default state should be. It also then has a list of what states the area can be in (different paragraphs). So should the options be attached to the area or the state the area is in? 
+Probably the area, but each paragraph/state has a set of references to the right options 
+
+
+
+
+
+
+

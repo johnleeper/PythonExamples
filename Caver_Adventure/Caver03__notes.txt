@@ -1,0 +1,61 @@
+Caver 03 Notes
+==============
+This could be wildly ambitious but I want to give it a go. 
+Firstly I'm going to use a database not text files. 
+Secondly I need to think seriously about classes and how they interact. 
+Rough idea for classes:
+
+Player Character:
+	Stamina (modified by healing & combat damage)
+	Attack (modified by weapons)
+	Armour: reduction of damage taken
+	Inventory: Space for 10 items? 
+
+Creature:
+	Description when alive
+	Description when dead
+	status dead/alive
+	stamina
+	attack
+	location
+
+Location:
+	Descriptions from each entranceway (possibly copied/pasted if same)
+	Entrances
+	Creatures here
+	Items here
+	Within each location there may be different things to explore or interact with. These will require customised paragraphs, each of which may involve modifying other stats. 
+	
+Paragraphs? Although initially I was just going to have them as attributes of locations, they could be class of their own linked to Locations
+	What location they belong to
+	Options for player - description and link to next paragraph if chosen
+	Consequences / changes to other objects (including Player). Not sure how to do this as a standard format that can be stored in database yet carried out by the program while running. 
+
+Items:
+	Location (inc in player inventory)
+	Weapon: Change to player's attack
+	Healing: Stamina restored
+	Armour: Damage reduction
+	Misc: (not sure but things like keys need to be considered)
+	Creatable (when dropped by creature or revealed) & destroyable (when consumed)
+	
+One thing I am considering is doing this in TKinter, Python's relatively simple GUI package. 
+
+Another thing to consider is the setting and story. I think given the name of the project it ought to be in a cave. But there is still the question of fantasy, sci-fi, modern or what. 
+
+CaverManager could be a program to manage the database, especially the basics of data entry, deletion and editing. Given the interconnectedness of the various objects derived from the database perhaps there could be some sort of preview method in this manager. 
+
+Database would have the starting state of the cave adventure. Once the data is loaded into Python objects things can and should change with progress of play, but this is not recorded in the database - as far as the game is concerned the database is read-only. 
+
+Probably don't need a table for player character as there is only one of those for any game session. Initial data can be stored in the code, probably in the Player class. 
+
+I'm starting to think that coming up with the fluff will be more difficult than the crunch. Perhaps write it out like a Fighting Fantasy book may be best and then turn that into database entries?
+
+The combat system should be simple but flexible. 
+
+Probably best if creatures stay in a single location each
+
+
+
+ 
+
