@@ -1,0 +1,137 @@
+Database Deconflictor Notes
+
+26/12/2022
+==========
+So this has slowed right down after realising it is not as straightforward as I had first hoped. 
+The big problem is not copying records from one table to another - it is making sure primary keys are valid. This means two things:
+Making sure that within a single merged table primary key value for each row is unique. This in itself is straightforward if the primary key is simply an abstract integer - simply change the primary key values of rows being inserted to current highest +1. But if the primary key actually represents something important and the value cannot be arbitarily changed, then any clashes when merging will be problematic and may prevent merging of the copies of the table. 
+When a primary key also links a row in one table to another row (or set of rows) in another table, making sure that the rows in the different tables do not become "disconnected". 
+I kind of worked out the first bit about making sure primary keys are unique within each table. 
+The second one is where I ground to a halt. 
+
+Reasonable Assumptions:
+This database deconflictor assumes that the Schema for the whole database is the same for both copies of the database. The database should cope with different rows but should not need to deal with different tables or columns. 
+Having said that, the program should offer to merge copies of the same table (same name, same columns in same order and same data types) even if other tables may differ within the database. 
+
+The BXdata.db that is the database I think about when writing this program has not been put together very professionally. Many tables do not have oficial primary keys but are linked to other tables with informal primary keys. Furthermore, these tables may have a column for ID numbers but the ID numbers are used by Python programs and are not SQLITE primary keys. 
+Actually this clash won't happen too often. The deconflictor is more about adding new records to tables. It only changes primary keys when adding new records whose primary key values clash with existing records in the table. 
+So with subtables you are going to get trouble when adding rows that need to be associated with rows in main tables that have had their primary keys changed, i.e. abstract ID numbers. 
+
+I was hoping that this database deconflictor would cope with a wide variety of different SQLite databases but now I am thinking you might need a bespoke database deconflictor for each database so that it can take into account the various quirks of how the database is set up. 
+Or maybe the user needs to tell the program how the tables are linked. For every table that is being merged, it should ask about subtables. 
+
+Steps of this process
+======================
+1) Establish connections to both databases, one is original, the other is branch. Actually do we want to have them as Source and Destination from the start? 
+Current program asks user whether original is source or destination and then assigns variables as required, but maybe this could be decided at the start. 
+
+2) Get the Schema for each of them and compare table by table, using sets. 
+If the schema for a table is exactly the same in both databases (in the intersection of sets) that is good and can go onto the next stage. If not (that exact table  is unique to one database or the other and in the difference of sets) it is ignored. 
+Currently for this stage the program compares the schemas for each table (and hence the column names and types) as one long string. At the moment this is not a problem. In fact I don't see it becoming a problem because even though it is just a string, it still will show whether the schema for each table is the same or different in the two databases. I don't see how you could have the same schema and different strings or vise versa. 
+
+3) For each table schema the databases have in common you need to know what rows are in common and what rows are different. 
+Again each row as a string within a set for each database, and then compare the two sets. Any strings in the intersection (rows that both databases have) can be ignored. 
+It is the rows that are unique to the source, not found in the destination (difference between the sets) are rows we are interested in.  
+Actually here we can compare tuples not strings. This makes it easier when separating values out to be inserted into each field. And since the fetchall() method returns a list of tuples, it is quicker and easier. It is also easier when one particular column (an index position in the tuple) is the primary key.
+
+4) if the two databases have tables with the same schema but different rows then we need to check the primary keys.
+First of all actual primary keys in the schema. 
+If there is no formal primary key in the schema then it may be worth asking the user if any column in the table should be treated as if a primary key. 
+If there is no primary key of any sort then unique rows can be copied over. (step 5)
+Is it string or integer or long? Is it just arbitary ID purely within the database or does it represent something in the real world, like monsters name, telephone number or invoice number? 
+If it is string then we assume it is not arbitary ID. 
+If it is integer then the program should ask the user whether it is safe to change the values in the column (i.e. the user may not know which column is primary key so go by the column name). If yes the primary key is assumed to be arbitary, if not it is non-arbitary.  
+If it is not arbitary then only unique rows with unique primary key values are copied over (step 5). Rows that have non-unique primary key values but other column values are different should be left alone and not copied. This could prove frustrating but I don't feel this program should deal with those sorts of conflicting records. 
+
+If the primary key is arbitary and user says it is okay to change it, then for each row that is in the source but not the destination, check to see if the primary key is unique. If it is then that row can be copied across (step 5)
+If the row has a non-unique arbitary ID primary key, then it can be changed. Find the highest primary key id in the destination and change the id for the new row to one more. Then add/insert the modified row to the destination table (step 5). Then do the same for the next row (whose ID should be 1 more than the previous one)
+
+5) For each row that is to be inserted/copied over from the source to destination table, we assume that the primary key is unique and has been resolved in step 4. 
+For each table where rows are copied the program looks at the schema of the table and uses it to compile a suitable SQL INSERT query template. If a column in the schema is text type, then the value will require quotes around it.  Integers, floats and Booleans do not require quotes. Not sure about date values. The schema also provides the column names needed for the insert query. It is best if everything (schema, row tuple, SQL Insert query template) keeps the same column order.  
+For each row to be added in that table the program takes the tuple of that row and also the  INSERT query template, combining them to form a complete and valid INSERT query. 
+Print and then Execute the INSERT query for each row. Catch any errors/exceptions and warn the user about that row but carry on with the next row. If its a problem with the INSERT query template/query, then all of the rows will fail. If the exception is about the primary key this may not happen to every row. 
+
+6) Subtables? Problem is I don't know in what order the program will go through the tables, so it could do subtables before or after the main tables. 
+We also only need to worry about updating values in subtables if primary key values in  
+
+01/01/2023 
+==========
+The problem is when changing primary key values in a main table is there a way to work out from the schema which values in other tables need to be changed?
+Current thinking is no. I suspect each deconflictor needs to be customised to each database set-up/schema with the program being told which are main tables and which are related subtables rather than the program figuring it out for itself. 
+What about asking the user when deconflictor runs? If it finds a table with differences between source and destination, it asks the user if there are subtables, perhaps offering a list of tables in the database. 
+This idea might work except:
+1) We don't know in what order the tables will be processed
+2) What if those subtables have subtables? And below that?
+3) MonsterBasic is a weird main table because it links to subtables by monstername, not monsterID. monsterID is the official primary key but monstername is the effective key. I don't think a program could work that one out. 
+
+I'm tempted to completely start over, this time focusing entirely on the BXdata.db with all its quirks and faults. 
+
+So now I have started BXdataDeconflictor.py 
+Going okay until I hit a bit of a snag. Different versions of SQLite3 store the schema slightly differently, namely spaces in the CREATE TABLE bit. 
+So all the other aspects of the schema could be the same but if comparing table schemas as strings then they will be considered different. 
+
+Once I accept that this program (BXdataDeconflictor.py) is just for the BXdata.db, it becomes a lot less worrying, particularly with regards to primary keys and linked tables, because although some tables do have primary keys, they are not part of linking related tables. 
+ 
+02/01/2023
+==========
+After trying to run the program on a laptop in a cafe, I have debugged it so that it can run on a range of machines and can test a number of different SQL queries to get the schema table. On my desktops the table is sqlite_schema but on the laptop it is sqlite_master. 
+Next is the primary key situation. So for the BXdata.db this is a matter of not copying across those where the primary key is a string and value is already there.
+
+04/01/2023
+==========
+Tried running it for real. But quotes are not being put around text values. Typical error message is 
+	INSERT into monsterhabitat (monName, habitat, habID) values (Elephant, jungle, 481)
+	Problem trying to insert this row
+	no such column: Elephant
+
+I think I've solved it. I changed
+            elif tableSchemaDump[colPosition][2] in ["text", "char"]:
+to
+            elif tableSchemaDump[colPosition][2] in ["text", "char", "varchar(255)", "varchar"]:
+Different versions of sqlite again. 
+
+
+I need to be careful about running this more than once with the same database files. 
+If a primary key ID number is changed, then when the program runs again it will decide the newly copied record in the main database is different from the one in the branch database and copy it over again.
+Currently 4 versions of Air Elemental 8Hd & Air Elemental 16Hd and 5 versions of Gray Ooze. 
+Fortunately it is just those 3 monsters that have been duplicated. 
+I should have made monster name the primary key. 
+Good news is that with a bit of SQL in the sqlite command line I have removed the unwanted duplicate entries. 
+	sqlite> SELECT * FROM monsterbasic WHERE monname = "Air Elemental 16Hd";
+	Air Elemental 16Hd|-2|16||Neutral|2300|10|Outsider|fly 360ft|8|f16|Expert Rules|15|119|
+	Air Elemental 16Hd|-2|16||Neutral|2300|10|Outsider|fly 360ft|8|f16|Expert Rules|14|135|
+	Air Elemental 16Hd|-2|16||Neutral|2300|10|Outsider|fly 360ft|8|f16|Expert Rules|14|139|
+	Air Elemental 16Hd|-2|16||Neutral|2300|10|Outsider|fly 360ft|8|f16|Expert Rules|14|140|
+	Air Elemental 16Hd|-2|16||Neutral|2300|10|Outsider|fly 360ft|8|f16|Expert Rules|14|145|
+	sqlite> DELETE FROM monsterbasic WHERE monname = "Air Elemental 16Hd" AND monsterid > 120;
+	sqlite> SELECT * FROM monsterbasic WHERE monname = "Air Elemental 8Hd";
+	Air Elemental 8Hd|2|8||Neutral|1200|10|Outsider|fly 360ft|8|f8|Expert Rules|8|117|
+	Air Elemental 8Hd|2|8||Neutral|1200|10|Outsider|fly 360ft|8|f8|Expert Rules||134|
+	Air Elemental 8Hd|2|8||Neutral|1200|10|Outsider|fly 360ft|8|f8|Expert Rules||138|
+	Air Elemental 8Hd|2|8||Neutral|1200|10|Outsider|fly 360ft|8|f8|Expert Rules||141|
+	Air Elemental 8Hd|2|8||Neutral|1200|10|Outsider|fly 360ft|8|f8|Expert Rules||144|
+	sqlite> DELETE FROM monsterbasic WHERE monname = "Air Elemental 8Hd" AND monsterid > 120;
+	sqlite> SELECT * FROM monsterbasic WHERE monname = "Air Elemental 12Hd";
+	Air Elemental 12Hd|0|12||Neutral|1900|10|Outsider|fly 360ft|8|f12|Expert Rules|12|118|
+	sqlite> SELECT * FROM monsterbasic WHERE monname = "Gray Ooze";
+	Gray Ooze|8|3||Neutral|50|12|Vermin|10ft|0|f2|Basic Rules|4|82|
+	Gray Ooze|8|3|||||Vermin|10ft|||Basic Rules||136|
+	Gray Ooze|8|3|||||Vermin|10ft|||Basic Rules||137|
+	Gray Ooze|8|3|||||Vermin|10ft|||Basic Rules||142|
+	Gray Ooze|8|3|||||Vermin|10ft|||Basic Rules||143|
+	sqlite> DELETE FROM monsterbasic WHERE monname = "Gray Ooze" AND monsterid > 120;
+	sqlite> SELECT * FROM monsterbasic WHERE monname = "Gray Ooze";
+	Gray Ooze|8|3||Neutral|50|12|Vermin|10ft|0|f2|Basic Rules|4|82|
+	sqlite>
+
+Should I carry on with this program? 
+From a purely practical point of view it has done what I wanted it to do and could do so again. 
+But there are improvements that could be made. Like for the BXdata.db it should also check there are no duplicate monname values in the monsterbasic table. This is specific to this database.
+
+            if table == "monsterbasic" and tableSchemaDump[colPosition][1] == "monname":
+                if datum in monnameList:
+                    validRow = False
+                else:
+                    monnameList.append(datum)
+
+Not brilliant but it deals with the problem encountered above. Now it should catch and stop duplicate monster names in the monsterbasic table. 

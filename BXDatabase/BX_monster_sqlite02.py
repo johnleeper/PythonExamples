@@ -36,21 +36,24 @@ def abilsEdit(monsterName):
             else:
                 newAbilDesc = input("New Ability Description: ")
                 newAbilDesc = sanitizeString(newAbilDesc)
-                query = 'INSERT INTO monsterspecabil (monName, specabilname, specabildesc, abilid) values ("' + monsterName + '", "' + newAbilName + '", "' + newAbilDesc + '", '+str(newAbilid) +')'
+                insertquery = 'INSERT INTO monsterspecabil (monName, specabilname, specabildesc, abilid) values ("' + monsterName + '", "' + newAbilName + '", "' + newAbilDesc + '", '+str(newAbilid) +')'
                 try:
-                    cursor.execute(query)
+                    print("InsertQuery: " + insertquery)
+                    cursor.execute(insertquery)
                     cursor.execute('COMMIT')
 
                 except:
                     print("Something went wrong: ")
-                    print(query)
+                    print(insertquery)
         elif abilChoice == "D" and len(abilDump) > 0:
             delChoice = input("Enter number of ability from list above to delete: ")
             try:
-                delquery = 'DELETE FROM monsterspecabil WHERE abilid = ' + abilDump[int(delChoice)][3]
+                delquery = 'DELETE FROM monsterspecabil WHERE abilid = ' + str(abilDump[int(delChoice)][3])
+                print("Query: " + delquery)
                 cursor.execute(delquery)
                 cursor.execute('COMMIT')
             except:
+                print("Query: " + delquery)
                 print("Something went wrong")
         elif abilChoice == "Q":
             print("Quitting ability edit mode")
@@ -171,7 +174,10 @@ def editMonster(monsterName):
             try:
                 fieldChoice = int(fieldChoice)
             except:
-                print("Invalid choice: " + fieldChoice)
+                print("Invalid choice: " + str(fieldChoice))
+                continue
+            if fieldChoice >= len(fieldList):
+                print("Invalid choice: " + str(fieldChoice))
                 continue
             fieldSelect = fieldDict[fieldList[fieldChoice]] 
         if fieldSelect[1] == "text":
@@ -228,7 +234,7 @@ def habitatsEdit(monsterName):
     cursor.execute('SELECT habId FROM monsterhabitat')
     idDump = cursor.fetchall()
     idList = []
-    print("FullHabDump = ", fullHabDump) ## diagnostic
+    #print("FullHabDump = ", fullHabDump) ## diagnostic
     fullHabList = []
     if len(fullHabDump) == 0:
         print("No habitats for any monster listed yet")
@@ -347,7 +353,7 @@ def intFieldEdit(monName, field):
 
 def listmonsters():
     nameList = monsterNameList()
-    print("There are " + str(len(nameList)) + " monsters. List all (A), filter (F) or quit (Q)? ")
+    print("There are " + str(len(nameList)) + " monsters. List all (A), filter (F), sort (s) or quit (Q)? ")
     listChoice = input("? ").upper()
     if listChoice == "A":
         for name in nameList:
@@ -355,6 +361,8 @@ def listmonsters():
     elif listChoice == "F":
         #print("Working on that") ## to be done
         filterMonList()
+    elif listChoice == "S":
+        sortMonList()
     elif listChoice == "Q":
         return
 
@@ -369,7 +377,7 @@ def monsterNameList():
 
 def nameEdit(monsterName):
     print("Changing name of " + monsterName + ", this will affect multiple tables")
-    revName = input("Please enter corrected name of monster: ")
+    revName = input("Please enter corrected name of monster: ").title()
     monNameList = monsterNameList()
     if revName in monNameList:
         print("Sorry, that name already exists. Name must be unique")
@@ -408,7 +416,7 @@ def newmonster():
     monName = input("New monster name: ").title()
     monName = sanitizeString(monName)
     if monName in monNameList:
-        cursor.execute('SELECT id FROM monsterbasic WHERE monName = "'+ monName+'"')
+        cursor.execute('SELECT monsterid FROM monsterbasic WHERE monName = "'+ monName+'"')
         specificIdDump = cursor.fetchall()
         specId = specificIdDump[0][0]
         print(monName + " already exists, id =" + str(specId))
@@ -428,7 +436,53 @@ def sanitizeString(suspectString):
         suspectString = suspectString.replace('"', '^^')
     if ";" in suspectString:
         suspectString = suspectString.replace(";", ":")
+    if "*" in suspectString:
+        suspectString = suspectString.replace("*", "x")
     return suspectString
+
+def sortMonList():
+    sortDict = {
+        "N": "monName",
+        "R": "AC",
+        "H": "HD",
+        "A": "align",
+        "X": "XPvalue",
+        "M": "morale",
+        "T": "montype",
+        "V": "movement",
+        "I": "intelligence",
+        "E": "saveAs",
+        "S": "source",
+        "C": "cr",
+        "D": "monsterid",
+        "Z": "treasure"
+        }
+    for col in sortDict:
+        print(col +": " + sortDict[col])
+    sortCol = input("Which column do you want to sort by? ").upper()
+    if sortCol == "N":
+        sortQuery = "SELECT monname FROM monsterbasic ORDER BY " + sortDict[sortCol]
+    elif sortCol in sortDict.keys():
+        sortQuery = "SELECT monname, "+sortDict[sortCol]+" FROM monsterbasic ORDER BY " + sortDict[sortCol] + ", monname"
+        
+    else:
+        print("Sorry, not a valid choice")
+        return
+    print(sortQuery)
+    cursor.execute(sortQuery)
+    sortedDump = cursor.fetchall()
+    maxNameList = monsterNameList()
+    maxNameSize = 0
+    for name in maxNameList:
+        if len(name) > maxNameSize:
+            maxNameSize = len(name)
+    maxColSize = maxNameSize +2
+    print("Monster Name" + (" " * (maxColSize - 12)) + sortDict[sortCol])
+    print("=" * (maxColSize + 20))
+    for row in sortedDump:
+        sortedVal = str(row[1])
+        print(row[0] + (" " * (maxColSize - len(row[0])) + sortedVal))
+    return
 
 def sourceList():
     cursor.execute("SELECT DISTINCT source FROM monsterbasic ORDER BY source;")
@@ -454,7 +508,7 @@ def textFieldEdit(monName, field):
             suggestCount +=1
             print(str(suggestCount) + ") " + suggest)
         dataEntry = input("New " + field + " for "+ monName +"? ")
-        if dataEntry in ("0", "1", "2", "3", "4", "5", "6", "7", "8", "9"):
+        if dataEntry in ("0", "1", "2", "3", "4", "5", "6", "7", "8", "9") and int(dataEntry) <= len(suggestList):
             dataEntry = suggestList[int(dataEntry) -1]
     else: 
         dataEntry = input("New " + field + " for "+ monName +" (text) ? ")
@@ -526,8 +580,8 @@ def viewMonster():
     
 
 ##### MAIN MENU #####
-dbPath = 'BXdata.db'
-conn = sqlite3.connect(dbPath)
+
+conn = sqlite3.connect('../../SQLite/databases/BXData.db')
 cursor = conn.cursor()
 
 print('Monster Database!')
